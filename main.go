@@ -17,19 +17,13 @@ func GetApiToken() string {
     panic(err)
   }
   
-  fmt.Println("BITCONTENT")
-  fmt.Print(bitContent)
   content := string(bitContent)
   content = strings.TrimSuffix(content, "\n")
-  fmt.Println("CONTENT")
-  fmt.Print(content)
 
   return content
 }
 
 func NewPatreonClient(ctx context.Context, token string) *patreon.Client {
-  fmt.Println("TOKEN")
-  fmt.Print(token)
   ts := oauth2.StaticTokenSource(&oauth2.Token{AccessToken: token})
   tc := oauth2.NewClient(ctx, ts)
 
@@ -45,11 +39,6 @@ func main() {
     fmt.Println("error ", err.Error())
   }
 
-  //method1<
-  //fmt.Printf("%+v\n", user.Data)
-  //method1>
-
-  //method2<
   jsonUserData, err := json.MarshalIndent(user.Data, "", "  ")
 
   if err != nil {
@@ -57,5 +46,4 @@ func main() {
   }
 
   fmt.Print(string(jsonUserData))
-  //method2>
 }
