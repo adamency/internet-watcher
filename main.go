@@ -60,8 +60,7 @@ func userHandler(w http.ResponseWriter, r *http.Request) {
 }
 
 func rootHandler(w http.ResponseWriter, r *http.Request) {
-  w.Header().Set("Content-Type", "application/text")
-  w.Write([]byte("shlm"))
+  fmt.Fprintf(w, "shlm")
 }
 
 func main() {
