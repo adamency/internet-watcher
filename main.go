@@ -59,7 +59,13 @@ func userHandler(w http.ResponseWriter, r *http.Request) {
   w.Write([]byte(userJSON))
 }
 
+func rootHandler(w http.ResponseWriter, r *http.Request) {
+  w.Header().Set("Content-Type", "application/text")
+  w.Write([]byte("shlm"))
+}
+
 func main() {
+  http.HandleFunc("/", rootHandler)
   http.HandleFunc("/user", userHandler)
 
   // Start the HTTP server
