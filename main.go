@@ -4,6 +4,7 @@ import (
   "context"
   "encoding/json"
   "fmt"
+  "net/http"
   "os"
   "strings"
 
@@ -31,7 +32,7 @@ func NewPatreonClient(ctx context.Context, token string) *patreon.Client {
   return client
 }
 
-func main() {
+func GetUserData() string {
   client := NewPatreonClient(oauth2.NoContext, GetApiToken())
   
   user, err := client.FetchUser()
@@ -45,5 +46,22 @@ func main() {
     fmt.Println("error jsonuserdata: ", err)
   }
 
-  fmt.Print(string(jsonUserData))
+  return string(jsonUserData)
+}
+
+// Function to handle requests to /user
+func userHandler(w http.ResponseWriter, r *http.Request) {
+
+  userJSON := GetUserData()
+
+  w.Header().Set("Content-Type", "application/json")
+
+  w.Write([]byte(userJSON))
+}
+
+func main() {
+  http.HandleFunc("/user", userHandler)
+
+  // Start the HTTP server
+  http.ListenAndServe(":8796", nil)
 }
